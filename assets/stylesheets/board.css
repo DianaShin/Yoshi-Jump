@@ -1,0 +1,20 @@
+main.board {
+
+
+}
+
+img.background-sky {
+  width: 50%;
+  z-index: 5;
+  position: absolute;
+  left: 250px;
+  bottom: 180px;
+}
+
+img.ground {
+  width: 50%;
+  z-index: 10;
+  position: absolute;
+  left: 250px;
+  bottom: 180px;
+}
