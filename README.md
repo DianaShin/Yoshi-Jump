@@ -1,7 +1,5 @@
 # Yoshi-Jump!
 
-# Yoshi-Jump
-
 This is a game that will be built with Javascript and Canvas HTML. 
 
 The way to play the game is pretty simple. The player will use the left and right arrows to make Yoshi jump either left or right. Yoshi must keep on jumping to another board that is higher than the one he is currently on. If he doesn't land on a board, poor Yoshi dies and it is game over for the player. 
