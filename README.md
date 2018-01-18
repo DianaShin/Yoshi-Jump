@@ -18,7 +18,7 @@ The way to play the game is pretty simple. The player will use the left and righ
   
 ## Wireframe 
 
-  ![wireframe](https://github.com/ayoung0131/Yoshi-Jump-/blob/master/game_wireframe.png)
+  ![wireframe](https://raw.githubusercontent.com/ayoung0131/Yoshi-Jump/master/assets/images/game_wireframe.png)
   
 ## Implementation Timeline 
 
