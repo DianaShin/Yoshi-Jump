@@ -85,43 +85,31 @@ let cloud7 = new Image();
   cloud7.src = './assets/images/cloud3-01.png';
 let clouds = [cloud1, cloud2, cloud3, cloud4, cloud5, cloud6, cloud7];
 
+// let platform = new Image();
+//   platform.src = './assets/images/board4-01.png';
+
+let platforms = [];
+
 document.addEventListener("DOMContentLoaded", start);
+
 
 function start() {
   let canvasEl = document.getElementById("mycanvas");
   let ctx = canvasEl.getContext('2d');
-  // let yoshi = new Image();
-  // yoshi.onload = function() {
-  //   ctx.drawImage(yoshi, 120, 400);
-  // };
-  // yoshi.src = "./assets/images/yoshi.png";
-
   let ground = new Image();
   ground.onload = function() {
     ctx.drawImage(ground, 0, 280);
   };
   ground.src = './assets/images/yoshi-ground.png';
 
-  debugger
-
-  let yoshi = new Yoshi(ctx);
-
   ctx.fillStyle = "#009dff";
   ctx.fillRect(0, 0, 400, 500);
 
-
   drawClouds();
   drawPlatforms();
-  // debugger
+  let yoshi = new Yoshi (ctx);
+  yoshi.draw(ctx);
 
-  // }
-  // draw(ctx) {
-  //   console.log("yoshi drawing");
-  //   let yoshi = new Image ();
-  //     yoshi.onload = function() {
-  // }
-
-  // ctx.clearRect(0, 0, 400, 525);
 }
 
 function drawClouds() {
@@ -152,42 +140,60 @@ function drawPlatforms() {
 /* 1 */
 /***/ (function(module, exports) {
 
-class Yoshi {
-  constructor() {
-    this.X = 0;
-    this.Y = 0;
-    this.isJumping = false;
-    this.isFalling = false;
-    this.jumpVel = 0;
-    this.fallVel = 0;
-  }
+let Yoshi = function (game) {
+  this.yoshiImg = new Image();
+  this.yoshiImg.src = "./assets/images/yoshi.png";
+  this.width = 42;
+  this.height = 57;
+  this.X = 0;
+  this.Y = 0;
+  this.isJumping = false;
+  this.isFalling = false;
+  this.jumpVel = 0;
+  this.fallVel = 0;
+};
 
-
-  collideWith(platform) {
-
-  }
-
-  moveLeft() {
-
-  }
-
-  moveRight() {
-
-  }
-
-  draw(ctx) {
-    let yoshi = new Image ();
-    console.log("yoshi drawing");
-    yoshi.onload = function() {
-      ctx.drawImage(yoshi, 0, 250);
-    };
-    yoshi.src = "./assets/images/yoshi.png";
-  }
-
-}
-
+Yoshi.prototype = {
+    setPos: function (x, y) {
+    this.X = x;
+    this.Y = y;
+  },
+    draw(ctx) {
+      console.log("yoshi drawing");
+      let yoshi = new Image ();
+        yoshi.onload = function() {
+          ctx.drawImage(yoshi, 50, 50);
+        yoshi.src = "./assets/images/yoshi.png";
+      };
+    }
+};
 
 module.exports = Yoshi;
+
+// class Yoshi {
+//   constructor(startingPos) {
+//     this.x = startingPos[0];
+//     this.y = startingPos[0];
+//   }
+//
+//   collideWith(platform ) {
+//
+//   }
+//
+//   move( ){
+//
+//   }
+//
+//   draw(ctx) {
+//     let yoshi = new Image ();
+//     yoshi.onload = function() {
+//       ctx.drawImage(yoshi, 0, 250);
+//     yoshi.src = "./assets/images/yoshi.png";
+//   };
+//  }
+// }
+//
+// module.exports = Yoshi;
 
 
 
