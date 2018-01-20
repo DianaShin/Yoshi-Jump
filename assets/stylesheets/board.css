@@ -1,26 +1,25 @@
 #mycanvas {
-  margin-left: 200px;
-  margin-top: 75px;
+  margin-left: 130px;
+  margin-top: 20px;
   border: solid 2px black;
+  position: relative;
 }
 
 main.board {
 
+}
+
+.background {
+  width: 100%;
 
 }
 
-img.background-sky {
-  width: 50%;
-  z-index: 5;
-  position: absolute;
-  left: 510px;
-  bottom: 180px;
-}
 
 img.ground {
-  width: 50%;
-  z-index: 10;
+  z-index: -1;
   position: absolute;
-  left: 510px;
-  bottom: 180px;
+  left: 0px;
+  width: 100%;
+  /*top: 0px;*/
+  background-color: #009dff;
 }
