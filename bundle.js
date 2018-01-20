@@ -68,33 +68,31 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 const Yoshi = __webpack_require__(1);
+// const Platform = require("./platform");
 
 let cloud1 = new Image();
-  cloud1.src = './assets/images/cloud1-01.png';
+  cloud1.src = './assets/images/cloud0.png';
 let cloud2 = new Image();
-  cloud2.src = './assets/images/cloud2-01.png';
+  cloud2.src = './assets/images/cloud1.png';
 let cloud3 = new Image();
-  cloud3.src = './assets/images/cloud3-01.png';
+  cloud3.src = './assets/images/cloud2.png';
 let cloud4 = new Image();
-  cloud4.src = './assets/images/cloud4.png';
+  cloud4.src = './assets/images/cloud3.png';
 let cloud5 = new Image();
-  cloud5.src = './assets/images/cloud1-01.png';
+  cloud5.src = './assets/images/cloud0.png';
 let cloud6 = new Image();
-  cloud6.src = './assets/images/cloud2-01.png';
+  cloud6.src = './assets/images/cloud1.png';
 let cloud7 = new Image();
-  cloud7.src = './assets/images/cloud3-01.png';
+  cloud7.src = './assets/images/cloud2.png';
 let clouds = [cloud1, cloud2, cloud3, cloud4, cloud5, cloud6, cloud7];
+
+let platforms = [];
 
 document.addEventListener("DOMContentLoaded", start);
 
 function start() {
   let canvasEl = document.getElementById("mycanvas");
   let ctx = canvasEl.getContext('2d');
-  // let yoshi = new Image();
-  // yoshi.onload = function() {
-  //   ctx.drawImage(yoshi, 120, 400);
-  // };
-  // yoshi.src = "./assets/images/yoshi.png";
 
   let ground = new Image();
   ground.onload = function() {
@@ -102,26 +100,12 @@ function start() {
   };
   ground.src = './assets/images/yoshi-ground.png';
 
-  debugger
-
-  let yoshi = new Yoshi(ctx);
-
   ctx.fillStyle = "#009dff";
   ctx.fillRect(0, 0, 400, 500);
 
-
   drawClouds();
   drawPlatforms();
-  // debugger
 
-  // }
-  // draw(ctx) {
-  //   console.log("yoshi drawing");
-  //   let yoshi = new Image ();
-  //     yoshi.onload = function() {
-  // }
-
-  // ctx.clearRect(0, 0, 400, 525);
 }
 
 function drawClouds() {
@@ -140,9 +124,12 @@ function drawPlatforms() {
   let numPlatforms = 6;
   for (let i = 0; i < numPlatforms; i++) {
     platform = new Image();
-      platform.src = './assets/images/board4-01.png';
+    platform.src = './assets/images/board4-01.png';
     platform.onload = function() {
       ctx.drawImage(platform, Math.random() * 350, Math.random() * 350);
+      let yoshi = new Yoshi();
+      yoshi.draw(ctx);
+
     };
   }
 }
@@ -152,59 +139,210 @@ function drawPlatforms() {
 /* 1 */
 /***/ (function(module, exports) {
 
-class Yoshi {
-  constructor() {
-    this.X = 0;
-    this.Y = 0;
-    this.isJumping = false;
-    this.isFalling = false;
-    this.jumpVel = 0;
-    this.fallVel = 0;
-  }
+var player = new (function() {
+  var that = this;
+  that.image = new Image();
+  that.image.src = "./assets/images/YoshiSprites.png";
+  that.width = 65;
+  that.height = 78;
+
+  that.X = 0;
+  that.Y = 0;
+
+  that.setPosition = function(x, y) {
+    that.X = x;
+    that.Y = y;
+  };
+
+  that.frames = 1;
+      that.actualFrame = 0;
+      that.interval = 0;
+
+      that.isJumping = false;
+      that.isFalling = false;
+
+      that.jumpSpeed = 0;
+      that.fallSpeed = 0;
+
+      that.draw = function() {
+          try {
+              ctx.drawImage(
+          		that.image,
+          		0,
+          		that.height * that.actualFrame,
+          		that.width,
+          		that.height,
+          		that.X,
+          		that.Y,
+          		that.width,
+          		that.height
+      		);
+          } catch (e) {
+          }
+
+          if (that.interval == 3 ) {
+              if (that.actualFrame == that.frames) {
+                  that.actualFrame = 0;
+              } else {
+                  that.actualFrame++;
+              }
+              that.interval = 0;
+          }
+
+      	that.interval++;
+      }
+
+      that.jump = function() {
+          if (!that.isJumping && !that.isFalling) {
+              that.fallSpeed = 0;
+              that.isJumping = true;
+              that.jumpSpeed = 17;
+          }
+      }
+
+      that.checkJump = function() {
+          if (that.Y > height*0.4) {
+              that.setPosition(that.X, that.Y - that.jumpSpeed);
+          } else {
+              if (that.jumpSpeed > 10) points++; //here!
+
+              MoveCircles(that.jumpSpeed * 0.5);
+
+              platforms.forEach(function(platform, ind) {
+                  platform.y += that.jumpSpeed;
+
+                  if (platform.y > height) {
+                      var type = ~~(Math.random() * 5);
+
+                      if (type == 0)
+                          type = 1;
+                      else
+                          type = 0;
+
+                      platforms[ind] = new Platform(
+                          Math.random() * (width - platformWidth),
+                          platform.y - height,
+                          type
+                      );
+                  }
+              });
+          }
+
+          that.jumpSpeed--;
+
+          if (that.jumpSpeed == 0) {
+              that.isJumping = false;
+              that.isFalling = true;
+              that.fallSpeed = 1;
+          }
+      }
+
+      that.checkFall = function() {
+          if (that.Y < height - that.height) {
+              that.setPosition(that.X, that.Y + that.fallSpeed);
+              that.fallSpeed++;
+          } else {
+              if (points == 0) {
+                  that.fallStop();
+              } else {
+                  GameOver();
+              }
+          }
+      }
+
+      that.fallStop = function() {
+          that.isFalling = false;
+          that.fallSpeed = 0;
+          that.jump();
+      }
+
+      that.moveLeft = function() {
+          if (that.X > 0) {
+              that.setPosition(that.X - 5, that.Y);
+          }
+      }
+
+      that.moveRight = function() {
+          if (that.X + that.width < width) {
+              that.setPosition(that.X + 5, that.Y);
+          }
+      }
+  })();
 
 
-  collideWith(platform) {
-
-  }
-
-  moveLeft() {
-
-  }
-
-  moveRight() {
-
-  }
-
-  draw(ctx) {
-    let yoshi = new Image ();
-    console.log("yoshi drawing");
-    yoshi.onload = function() {
-      ctx.drawImage(yoshi, 0, 250);
-    };
-    yoshi.src = "./assets/images/yoshi.png";
-  }
-
-}
-
-
-module.exports = Yoshi;
 
 
 
-
-// later for sprites
-//  in <script></script> for index.html
-//  var x = 0 ;
-// var y = 0 ;
-// var srcX;
-// var srcY;
-// var sheetWidth = 900;
-// var sheetHeight = 280;
-// var frameCount = 9;
-// var cols = 8;
-// var rows = 2;
-// var width = sheetWidth/ frameCount
-// var height = sheetHeight/ rows;
+// class Yoshi {
+//   constructor() {
+//     this.x = 10;
+//     this.y = 400;
+//     this.dx = 0;
+//     this.dy = 0;
+//     this.gravity = 0.4
+//     this.isJumping = false;
+//     this.isFalling = false;
+//     this.jumpVel = 0;
+//     this.fallVel = 0;
+//     this.width = 42;
+//     this.height = 57;
+//     this.jumpSpeed = 0;
+//     this.fallSpeed = 0;
+//     this.isMoving = true;
+//
+//   }
+//
+//   setPos(x, y) {
+//     this.x = x;
+//     this.y = y;
+//   }
+//
+//   draw(ctx) {
+//     let yoshi = new Image ();
+//     yoshi.onload = function() {
+//       ctx.drawImage(yoshi, 200, 448);
+//     };
+//     yoshi.src = "./assets/images/yoshi.png";
+//
+//   }
+//
+//   jump() {
+//       if (!this.isJumping && !this.isFalling) {
+//         this.fallVel = 0;
+//         this.isJumping = true;
+//         this.jumpVel = 18;
+//       }
+//     }
+//
+//   fallStop() {
+//       this.isFalling = false;
+//       this.fallVel = 0;
+//       this.jump();
+//     }
+//
+//   moveLeft() {
+//     if (this.X > 0) {
+//       this.setPos(this.X - 10, this.Y);
+//     }
+//   }
+//
+//   moveRight() {
+//     if (this.X < width - this.width) {
+//       this.setPos(this.X + 10, this.Y);
+//     }
+//   }
+//
+//   reset() {
+//     this.isJumping = false;
+//     this.isFalling = false;
+//     this.jumpVel = 0;
+//     this.fallVel = 0;
+//   }
+//
+// }
+//
+//
+// module.exports = Yoshi;
 
 
 /***/ })
