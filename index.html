@@ -8,14 +8,42 @@
   </head>
   <body>
     <main class="board">
-      <canvas width="400" height="525" id="mycanvas"></canvas>
-      <!-- <img src="assets/images/yoshi-ground.png" class="background"> -->
-      <img src="assets/images/yoshi-title-01.png" class="title"/>
-      <img src="assets/images/yoshi-ground3.png" class="ground" id="ground"/>
+      <canvas width="400" height="500" id="mycanvas"></canvas>
+      <!-- <img src="assets/images/yoshi-cover-01.png" class="cover"/> -->
+
+      <img src="assets/images/yoshi-ground3.png" class="ground"/>
+
+      <section class="about">
+        <img src="assets/images/yoshi-title-01.png" class="title"/>
+        <div>
+          <img src="assets/images/yoshi-author-01.png" class="me" />
+          <ul class="about-item">
+            <li>
+              <a href="https://github.com/dianashin">
+                <img src="assets/images/github-icon-01.png" class="icon" />
+              </a>
+            </li>
+            <li>
+              <a href="https://www.linkedin.com/in/diana-shin/">
+                <img src="assets/images/linkedin-icon2-01.png" class="icon" />
+              </a>
+            </li>
+            <li>
+              <img src="assets/images/pdf-icon-01.png" class="icon" />
+            </li>
+            <li>
+              <a href="https://dianashin.github.io/">
+                <img src="assets/images/portfolio-icon-01.png" class="icon" />
+              </a>
+            </li>
+          </ul>
+        </div>
+      </section>
     </main>
       <script src="lib/yoshi.js"></script>
       <script src="lib/platform.js"></script>
       <script src="lib/cloud.js"></script>
+      <script src="lib/yoshiJump.js"></script>
       <script src="lib/game.js"></script>
   </body>
 </html>

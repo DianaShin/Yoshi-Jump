@@ -1,24 +1,36 @@
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
 #mycanvas {
   margin-left: 130px;
   margin-top: 25px;
+  margin-right: 50px;
   border: solid 2px black;
-  position: relative;
+  z-index: 1;
 }
 
 main.board {
-
+  width: 100%;
+  height: 100%;
 }
 
 .background {
   width: 100%;
+}
 
+section.about {
+  float: right;
+  width: 25%;
+  display: flex;
+  flex-direction: column;
 }
 
 .title {
+  margin-top: 50px;
+  margin-bottom: 25px;
   width: 250px;
-  position: relative;
-  bottom: 350px;
-  left: 450px;
 }
 
 img.ground {
@@ -26,6 +38,31 @@ img.ground {
   position: absolute;
   left: 0px;
   width: 100%;
-  /*top: 0px;*/
   background-color: #009dff;
+}
+
+img.me {
+  z-index: -1;
+  padding-left: 40px;
+  width: 60%;
+  background-color: #009dff;
+}
+
+ul.about-item {
+  display: flex;
+  flex-direction: row;
+  padding-left: 40px;
+}
+
+img.icon {
+  padding: 0px;
+  width: 58%;
+  margin-left: 0px;
+  margin-right: 1px;
+  cursor: pointer;
+  z-index: -1;
+}
+
+li {
+  list-style: none;
 }
